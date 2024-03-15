@@ -24,10 +24,16 @@ class Pattern {
         $xOffset = $startToken->getX() - $this->coordinates[0]->getX();
         $yOffset = $startToken->getY() - $this->coordinates[0]->getY();
 
+        $tokenCoordinates = [];
+        foreach ($tokens as $token) {
+            $tokenCoordinates[$token->getX()][$token->getY()] = true;
+        }
+
         foreach ($this->coordinates as $coordinate) {
             $x = $coordinate->getX() + $xOffset;
             $y = $coordinate->getY() + $yOffset;
-            if (!in_array(new Coordinate($x, $y), $tokens)) {
+
+            if (!isset($tokenCoordinates[$x][$y])) {
                 return false;
             }
         }
